@@ -1,0 +1,11 @@
+{
+  "name": "Hello World",
+  "id": "hello-world",
+  "version": "1.0.0",
+  "description": "The smallest plugin there is: a Tools menu item that opens a pane saying hello to the open map.",
+  "author": "Jeany",
+  "homepage": "https://github.com/scm-js/plugin-hello-world",
+  "entry": "plugin.ts",
+  "icon": "👋",
+  "api": 1
+}

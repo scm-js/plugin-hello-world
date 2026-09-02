@@ -1,0 +1,15 @@
+{
+  "name": "scmjs-plugin-hello-world",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Hello World — the example plugin for the scmJS StarCraft map editor.",
+  "author": "Jeany",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.2"
+  }
+}
