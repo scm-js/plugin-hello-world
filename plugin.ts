@@ -10,10 +10,10 @@
  * exports an activate() function that registers whatever the plugin adds to the editor.
  */
 
-// A type-only import. The editor strips this line when it loads the file, so the
-// plugin-api/ folder is used by your editor and by `npm run typecheck`, never by the
-// browser. Plugins have no dependencies and no build step.
-import type { PluginApi } from "./plugin-api/plugins/api";
+// A type-only import. `@scm-js/plugin-api` is a devDependency holding the editor's type
+// declarations, so your editor and `npm run typecheck` know the shape of `api`; the line
+// itself is erased when the plugin is built, and the browser never sees the package.
+import type { PluginApi } from "@scm-js/plugin-api";
 
 /**
  * The editor calls this once, when the plugin is enabled, and passes in the API.

@@ -6,6 +6,7 @@
   "author": "Jeany",
   "homepage": "https://github.com/scm-js/plugin-hello-world",
   "entry": "plugin.ts",
+  "build": "dist/plugin.js",
   "icon": "👋",
   "api": 1
 }

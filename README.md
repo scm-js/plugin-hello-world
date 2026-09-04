@@ -17,19 +17,20 @@ https://github.com/scm-js/plugin-hello-world
 
 into the box and press Add. Then open a map and choose Tools ▸ Hello World….
 
-This plugin is not installed by default (only
-[Terrain from Image](https://github.com/scm-js/plugin-image-to-terrain) is), so you add it
-by hand, the same way you would add anyone else's.
+This plugin is not one of the editor's defaults, so you add it by hand, the same way you
+would add anyone else's.
 
 ## Files
 
 - `plugin.ts` is the plugin. About sixty lines, most of them comments. Start here.
 - `plugin.json` is the manifest: name, version, which file to run, the icon, and the API
   version the plugin needs.
-- `plugin-api/` holds the editor's type declarations, copied in so this repository
-  type-checks on its own.
-- `tsconfig.json` and `package.json` are only for `npm run typecheck`. The editor never
-  reads them.
+- `dist/plugin.js` is the built bundle the editor loads; `npm run build` writes it and CI
+  commits it, so there is nothing to edit there.
+- `@scm-js/plugin-api` is a devDependency holding the editor's type declarations, so this
+  repository type-checks on its own.
+- `tsconfig.json` and `package.json` are for `npm run typecheck`, `npm test` and
+  `npm run build`. The editor never reads them.
 
 ## The manifest
 
@@ -42,6 +43,7 @@ by hand, the same way you would add anyone else's.
   "author": "Jeany",
   "homepage": "https://github.com/scm-js/plugin-hello-world",
   "entry": "plugin.ts",
+  "build": "dist/plugin.js",
   "icon": "👋",
   "api": 1
 }
@@ -50,20 +52,27 @@ by hand, the same way you would add anyone else's.
 Only `name` is required. `entry` defaults to `plugin.ts`. `icon` can be an emoji, an image
 file sitting next to the manifest, a `data:` URI, or the URL of an image.
 
+`build` names a built JavaScript bundle to load in place of `entry` — one fetch, and no
+TypeScript compiler in the browser. Leave it out and the editor fetches `plugin.ts` and
+transpiles it itself, which is a fine way to start; `entry` stays either way, because it is
+what a person reads.
+
 `api` is the API version this plugin needs, which is usually older than the current one.
 Nothing here was added after version 1, so it says 1 and an older editor will still load
 it. A plugin that called something newer, such as `ui.pickArea`, would say 2.
 
 ## The code
 
-The editor fetches `plugin.ts` over the network and transpiles it in the browser, so there
-is no build step and nothing to install. Plain JavaScript works as well if you would
-rather skip TypeScript.
+`npm run build` bundles `plugin.ts` into `dist/plugin.js` with esbuild, and that one file is
+what the editor loads (`build` in the manifest). Run `npm run dev` while you work and it
+follows your edits. A plugin can skip the build and let the editor fetch and transpile
+`plugin.ts` itself — drop `build` from the manifest — and plain JavaScript works too, if you
+would rather skip TypeScript.
 
-The `import type` line at the top is erased when the file loads, so `plugin-api/` never
-reaches the browser. It is there for autocomplete in your editor and for
-`npm run typecheck`. Those declarations are generated in the scmJS repository by
-`npm run build:plugin-types`; copy them in again when the plugin API changes.
+The `import type` line at the top is erased by the build, so `@scm-js/plugin-api` never reaches
+the browser. It is there for autocomplete in your editor and for `npm run typecheck`, and it is
+generated from the editor's own `src/plugins/api.ts`; `npm update @scm-js/plugin-api` takes the
+newest contract.
 
 ## Doing more than this
 
@@ -75,7 +84,8 @@ stroke.
 - [docs/plugins.md](https://github.com/jeany55/scm-js/blob/main/docs/plugins.md) walks
   through the API.
 - [src/plugins/api.ts](https://github.com/jeany55/scm-js/blob/main/src/plugins/api.ts) is
-  the exact surface, also vendored here as `plugin-api/plugins/api.d.ts`.
+  the exact surface; [`@scm-js/plugin-api`](https://github.com/scm-js/plugin-api) is its
+  generated typings, which this repository depends on.
 - [Terrain from Image](https://github.com/scm-js/plugin-image-to-terrain) is a plugin with
   real work in it, if you want a longer example.
 
