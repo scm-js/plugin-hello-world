@@ -1,0 +1,12 @@
+name: zz token probe
+on: { workflow_dispatch: }
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          PAT: ${{ secrets.REGISTRY_PAT }}
+        run: |
+          code=$(curl -s -o /tmp/b -D /tmp/h -w '%{http_code}' -H "Authorization: Bearer $PAT" https://api.github.com/user)
+          echo "http $code"
+          grep -i "^x-oauth-scopes\|^x-accepted-oauth-scopes\|^github-authentication-token-expiration" /tmp/h || echo "no oauth-scopes header -> fine-grained token"
