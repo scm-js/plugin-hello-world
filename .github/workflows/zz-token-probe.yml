@@ -1,0 +1,15 @@
+name: zz token probe
+on: { workflow_dispatch: }
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: What can REGISTRY_PAT reach
+        env:
+          GH_TOKEN: ${{ secrets.REGISTRY_PAT }}
+        run: |
+          if [ -z "${GH_TOKEN:-}" ]; then echo "REGISTRY_PAT is not visible here"; exit 0; fi
+          echo "identity: $(gh api /user --jq .login 2>&1)"
+          for r in plugin-hello-world registry scm-js plugin-scmjs-dev; do
+            echo "$r -> $(gh api /repos/scm-js/$r --jq '.permissions' 2>&1 | head -1)"
+          done
