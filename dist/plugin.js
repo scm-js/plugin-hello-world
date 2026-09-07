@@ -33,3 +33,5 @@ function openHelloPane(api) {
 export {
   activate as default
 };
+
+// stale marker, CI should rebuild this away
