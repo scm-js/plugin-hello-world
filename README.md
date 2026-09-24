@@ -1,6 +1,6 @@
 # Hello World
 
-An example plugin for [scmJS](https://github.com/jeany55/scm-js), a browser-based
+An example plugin for [scmJS](https://github.com/scm-js/scm-js), a browser-based
 StarCraft 1 / Brood War map editor.
 
 It adds one item to the Tools menu. The item opens a small pane that says "Hello world",
@@ -81,9 +81,9 @@ editor events, keep its own settings, and change the map through
 `api.document.edit(label, tx => ...)`, which becomes a single undo step like a brush
 stroke.
 
-- [docs/plugins.md](https://github.com/jeany55/scm-js/blob/main/docs/plugins.md) walks
+- [docs/plugins.md](https://github.com/scm-js/scm-js/blob/main/docs/plugins.md) walks
   through the API.
-- [src/plugins/api.ts](https://github.com/jeany55/scm-js/blob/main/src/plugins/api.ts) is
+- [src/plugins/api.ts](https://github.com/scm-js/scm-js/blob/main/src/plugins/api.ts) is
   the exact surface; [`@scm-js/plugin-api`](https://github.com/scm-js/plugin-api) is its
   generated typings, which this repository depends on.
 - [Terrain from Image](https://github.com/scm-js/plugin-image-to-terrain) is a plugin with
