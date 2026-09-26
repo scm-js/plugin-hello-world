@@ -22,7 +22,9 @@ would add anyone else's.
 
 ## Files
 
-- `plugin.ts` is the plugin. About sixty lines, most of them comments. Start here.
+- `plugin.ts` is the plugin. About ninety lines, most of them comments. Start here.
+- `ko.ts` is the Korean for the words the plugin shows, and `tests/ko.test.ts` checks it
+  against `plugin.ts` (see [Translations](#translations)).
 - `plugin.json` is the manifest: name, version, which file to run, the icon, and the API
   version the plugin needs.
 - `dist/plugin.js` is the built bundle the editor loads; `npm run build` writes it and CI
@@ -74,6 +76,25 @@ the browser. It is there for autocomplete in your editor and for `npm run typech
 generated from the editor's own `src/plugins/api.ts`; `npm update @scm-js/plugin-api` takes the
 newest contract.
 
+## Translations
+
+The editor can be switched to Korean, and a plugin can follow it. Write every word the
+plugin shows in English, as `api.i18n.t("Hello world")`, and put the Korean in `ko.ts`
+with the English as the key. `api.i18n.register({ ko: KO })` at the start of `activate()`
+hands that list to the editor, and `t` then returns the Korean when the editor is in
+Korean and the English otherwise; anything missing from the list shows in English.
+Numbers and names go in as placeholders — `t("{n} units", { n })` — so the translation can
+put them where Korean wants them.
+
+Menu labels and command titles are passed to the editor in English, wrapped in `msg("…")`,
+which does nothing but mark the text; the editor translates them itself when it draws the
+menu, so they change with the language and still work as the names other items are placed
+`after`. A panel that stays open can redraw itself on
+`api.events.on("language", …)`. Never translate the map's own text.
+
+`npm test` fails when a string in `plugin.ts` has no entry in `ko.ts`, when `ko.ts` has an
+entry nothing uses, or when a translation drops a placeholder, so the two cannot drift.
+
 ## Doing more than this
 
 A plugin can also add context-menu entries and hotkeys, read the open scenario, listen for
@@ -94,6 +115,7 @@ stroke.
 ```sh
 npm install
 npm run typecheck
+npm test
 ```
 
 While working on a plugin it is quicker to load it from disk: serve the folder with

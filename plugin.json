@@ -1,7 +1,7 @@
 {
   "name": "Hello World",
   "id": "hello-world",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "An example plugin to copy from. It adds one Tools menu item that opens a small pane showing the name of the map you have open.",
   "author": "Jeany",
   "homepage": "https://github.com/scm-js/plugin-hello-world",
