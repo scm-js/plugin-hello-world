@@ -4,7 +4,7 @@
  * It adds one item to the Tools menu. The item opens a pane that says "Hello world" with
  * the name of the open map on the next line, and a Close button. Copy this file as the
  * starting point for a plugin of your own; the API is documented at
- * https://github.com/jeany55/scm-js/blob/main/docs/plugins.md.
+ * https://github.com/scm-js/scm-js/blob/main/docs/plugins.md.
  *
  * A plugin needs two files: plugin.json, which says where the code is, and this one, which
  * exports an activate() function that registers whatever the plugin adds to the editor.
